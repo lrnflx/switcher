@@ -1,20 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AppareilService } from './services/appareil.service';
-import { Observable, interval } from 'rxjs';
+import { Observable, interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
  
   secondes : number;
+  counterSubscription: Subscription;
 
   ngOnInit() {
     const counter = interval(1000);
 
-    counter.subscribe(
+    this.counterSubscription = counter.subscribe(
       (value) => {
         this.secondes = value ;
       }, 
@@ -26,6 +27,10 @@ export class AppComponent implements OnInit {
         console.log('Observable complete!');
       }
     );
-    }
-
+  }
+  ngOnDestroy(){
+    this.counterSubscription.unsubscribe();
+  }
 }
+
+
