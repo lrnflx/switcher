@@ -1,5 +1,11 @@
+import { Subject } from 'rxjs';
+
 export class AppareilService {
-    appareils = [
+
+    // créer un Subject dans le service qui gèrera données de types any[]
+    appareilsSubject = new Subject<any[]>();
+    
+    private appareils = [
         { 
           id: 1,
           name: 'Machine à laver',
@@ -16,6 +22,11 @@ export class AppareilService {
           status: 'éteint'
         }
       ];
+
+    // Les données reçues par le service sont émises par le Subject et cette méthode est appelée dans toutes les autres qui en dépendent
+    emitAppareilSubject(){
+      this.appareilsSubject.next(this.appareils.slice());
+    }
     
     switchOnAll(){
       for(let appareil of this.appareils){
