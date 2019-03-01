@@ -13,10 +13,12 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './services/auth-guard.service';
 import { SingleAppareilComponent } from './single-appareil/single-appareil.component';
 import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
+import { EditAppareilComponent } from './edit-appareil/edit-appareil.component';
 
 const appRoutes: Routes = [
   { path: 'appareils', canActivate: [AuthGuard], component: AppareilViewComponent },
   { path: 'auth', component: AuthComponent },
+  { path: 'edit', canActivate: [AuthGuard], component: EditAppareilComponent},
   { path: '', component: AppareilViewComponent }, 
   { path: 'appareils/:id', component: SingleAppareilComponent }, 
   { path: 'not-found', component: FourOhFourComponent},
@@ -30,7 +32,8 @@ const appRoutes: Routes = [
     AppareilViewComponent,
     AuthComponent,
     SingleAppareilComponent,
-    FourOhFourComponent
+    FourOhFourComponent,
+    EditAppareilComponent
   ],
   imports: [
     BrowserModule, 
