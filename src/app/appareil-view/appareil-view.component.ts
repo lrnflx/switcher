@@ -37,7 +37,7 @@ export class AppareilViewComponent implements OnInit, OnDestroy {
 
   onAllumer()
   {
-    this.appareilService.switchOffAll();
+    this.appareilService.switchOnAll();
   }
 
   onEteindre()
