@@ -35,6 +35,14 @@ export class AppareilViewComponent implements OnInit, OnDestroy {
     this.appareilService.emitAppareilSubject();
   }
 
+  onFetch() {
+    this.appareilService.getAppareilsFromServer();
+  }
+
+  onSave(){
+    this.appareilService.saveAppareilsToServer();
+  }
+
   onAllumer()
   {
     this.appareilService.switchOnAll();

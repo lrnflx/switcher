@@ -1,5 +1,8 @@
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class AppareilService {
 
     // créer un Subject dans le service qui gèrera données de types any[]
@@ -22,6 +25,36 @@ export class AppareilService {
           status: 'éteint'
         }
       ];
+
+    //Injection du client http
+    constructor(private http: HttpClient){};
+
+    saveAppareilsToServer(){
+      this.http
+        .put('https://switcher-oc.firebaseio.com/appareils.json', this.appareils)
+        .subscribe(
+          () => {
+            console.log('Enregistrement terminé!');
+          },
+          (error) => {
+            console.log('Erreur! :' + error);
+          }
+        );
+    }
+
+    getAppareilsFromServer(){
+      this.http
+        .get<any[]>('https://switcher-oc.firebaseio.com/appareils.json')
+        .subscribe(
+          (response) => {
+            this.appareils = response;
+            this.emitAppareilSubject();
+          },
+          (error) => {
+            console.log('Erreur! :' + error);
+          }
+        );
+    }
 
     // Les données reçues par le service sont émises par le Subject et cette méthode est appelée dans toutes les autres qui en dépendent
     emitAppareilSubject(){
